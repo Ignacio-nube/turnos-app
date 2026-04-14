@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /c/Users/nacho/Documents/turnos log --oneline -5)",
+      "Bash(mv /c/Users/nacho/Documents/turnos_temp/.agents /c/Users/nacho/Documents/turnos/)",
+      "Bash(mv /c/Users/nacho/Documents/turnos_temp/.mcp.json /c/Users/nacho/Documents/turnos/)",
+      "Bash(mv /c/Users/nacho/Documents/turnos_temp/INSTRUCTIONS.md /c/Users/nacho/Documents/turnos/)",
+      "Bash(mv /c/Users/nacho/Documents/turnos_temp/skills-lock.json /c/Users/nacho/Documents/turnos/)",
+      "Bash(rm -rf /c/Users/nacho/Documents/turnos_temp)"
+    ]
+  }
+}
