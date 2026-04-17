@@ -110,7 +110,7 @@ export function Sidebar() {
               )}
               aria-label={item.label}
             >
-              <Icon className="h-5 w-5 shrink-0" />
+              <Icon className="h-7 w-7 shrink-0" />
               {!collapsed && item.label}
             </Link>
           )
