@@ -117,6 +117,7 @@ export function AppCalendar({ appointments }: AppCalendarProps) {
       defaultView: createViewWeek().name,
       selectedDate: today,
       timezone: TZ,
+      dayBoundaries: { start: '07:00', end: '23:00' },
       events: appointments.map(mapToCalendarEvent),
       calendars: calendarsConfig,
       locale: 'es-ES',
