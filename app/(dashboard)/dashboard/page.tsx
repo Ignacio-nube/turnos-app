@@ -12,61 +12,68 @@ import { es } from 'date-fns/locale'
 import Link from 'next/link'
 
 async function DashboardMetrics() {
-  const supabase = await createClient()
-  const today = new Date()
-  const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString()
-  const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59).toISOString()
+  try {
+    const supabase = await createClient()
+    const today = new Date()
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString()
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59).toISOString()
 
-  const { data: todayAppointments } = await supabase
-    .from('appointments')
-    .select('id, status, start_time, client_name, services(name)')
-    .gte('start_time', startOfDay)
-    .lte('start_time', endOfDay)
+    const { data: todayAppointments, error } = await supabase
+      .from('appointments')
+      .select('id, status, start_time, client_name, services(name)')
+      .gte('start_time', startOfDay)
+      .lte('start_time', endOfDay)
 
-  const total = todayAppointments?.length ?? 0
-  const completed = todayAppointments?.filter(a => a.status === 'completed').length ?? 0
-  const pending = todayAppointments?.filter(a => a.status === 'confirmed').length ?? 0
+    if (error) throw error
 
-  const now = new Date()
-  const nextAppointment = todayAppointments
-    ?.filter(a => a.status === 'confirmed' && new Date(a.start_time) >= now)
-    .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())[0]
+    const total = todayAppointments?.length ?? 0
+    const completed = todayAppointments?.filter(a => a.status === 'completed').length ?? 0
+    const pending = todayAppointments?.filter(a => a.status === 'confirmed').length ?? 0
 
-  const nextValue = nextAppointment
-    ? `${nextAppointment.client_name} · ${format(new Date(nextAppointment.start_time), 'HH:mm')}`
-    : 'Sin turnos pendientes'
+    const now = new Date()
+    const nextAppointment = todayAppointments
+      ?.filter(a => a.status === 'confirmed' && new Date(a.start_time) >= now)
+      .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())[0]
 
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <MetricCard
-        title="Turnos de hoy"
-        value={total}
-        subtitle={format(today, "EEEE d 'de' MMMM", { locale: es })}
-        icon={CalendarDays}
-      />
-      <MetricCard
-        title="Próximo turno"
-        value={nextAppointment ? format(new Date(nextAppointment.start_time), 'HH:mm') : '—'}
-        subtitle={nextAppointment ? nextAppointment.client_name : 'Sin turnos'}
-        icon={Clock}
-        iconColor="text-blue-500"
-      />
-      <MetricCard
-        title="Completados hoy"
-        value={completed}
-        subtitle={`de ${total} totales`}
-        icon={CheckCircle}
-        iconColor="text-green-500"
-      />
-      <MetricCard
-        title="Turnos pendientes"
-        value={pending}
-        subtitle="confirmados y sin atender"
-        icon={AlertCircle}
-        iconColor="text-amber-500"
-      />
-    </div>
-  )
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <MetricCard
+          title="Turnos de hoy"
+          value={total}
+          subtitle={format(today, "EEEE d 'de' MMMM", { locale: es })}
+          icon={CalendarDays}
+        />
+        <MetricCard
+          title="Próximo turno"
+          value={nextAppointment ? format(new Date(nextAppointment.start_time), 'HH:mm') : '—'}
+          subtitle={nextAppointment ? nextAppointment.client_name : 'Sin turnos'}
+          icon={Clock}
+          iconColor="text-blue-500"
+        />
+        <MetricCard
+          title="Completados hoy"
+          value={completed}
+          subtitle={`de ${total} totales`}
+          icon={CheckCircle}
+          iconColor="text-green-500"
+        />
+        <MetricCard
+          title="Turnos pendientes"
+          value={pending}
+          subtitle="confirmados y sin atender"
+          icon={AlertCircle}
+          iconColor="text-amber-500"
+        />
+      </div>
+    )
+  } catch (err) {
+    console.error('[DashboardMetrics]', err)
+    return (
+      <div className="rounded-lg border border-destructive/40 bg-destructive/5 p-4 text-sm text-destructive">
+        No se pudieron cargar las métricas. Verificá que las variables de entorno de Supabase estén configuradas en Vercel y que el proyecto no esté pausado.
+      </div>
+    )
+  }
 }
 
 export default function DashboardPage() {
