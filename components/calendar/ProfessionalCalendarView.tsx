@@ -87,19 +87,24 @@ export function ProfessionalCalendarView({ appointments, professionalName }: Pro
   }, [router])
 
   // Build per-service color config for Schedule-X
+  // colorName MUST be a valid CSS identifier (no spaces) — use cal-N
   const calendarsConfig = useMemo(() => {
     const map: Record<string, {
       colorName: string
       lightColors: { main: string; container: string; onContainer: string }
       darkColors: { main: string; container: string; onContainer: string }
     }> = {}
+    let idx = 0
     let fallbackIdx = 0
     for (const apt of appointments) {
       const svcId = apt.service_id ?? 'default'
       if (map[svcId]) continue
-      const hex = apt.services?.color ?? FALLBACK_COLORS[fallbackIdx++ % FALLBACK_COLORS.length]
+      const rawHex = apt.services?.color ?? ''
+      const hex = /^#[0-9a-fA-F]{6}$/.test(rawHex)
+        ? rawHex
+        : FALLBACK_COLORS[fallbackIdx++ % FALLBACK_COLORS.length]
       map[svcId] = {
-        colorName: apt.services?.name ?? svcId,
+        colorName: `cal-${idx++}`,
         lightColors: { main: hex, container: hex + '33', onContainer: '#111827' },
         darkColors:  { main: hex, container: hex + '55', onContainer: '#f9fafb' },
       }
