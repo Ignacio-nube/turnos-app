@@ -128,3 +128,31 @@
     @apply font-sans;
   }
 }
+
+/* Schedule-X dark mode — apply .is-dark variables when Tailwind .dark class is active */
+.dark .sx__calendar-wrapper,
+.dark .sx__date-picker-popup {
+  --sx-color-primary: #d0bcff;
+  --sx-color-on-primary: #371e73;
+  --sx-color-primary-container: #4f378b;
+  --sx-color-on-primary-container: #eaddff;
+  --sx-color-secondary: #ccc2dc;
+  --sx-color-on-secondary: #332d41;
+  --sx-color-secondary-container: #4a4458;
+  --sx-color-on-secondary-container: #e8def8;
+  --sx-color-surface: #141218;
+  --sx-color-surface-dim: #141218;
+  --sx-color-surface-bright: #3b383e;
+  --sx-color-on-surface: #e6e1e5;
+  --sx-color-surface-container: #211f26;
+  --sx-color-surface-container-low: #1d1b20;
+  --sx-color-surface-container-high: #2b2930;
+  --sx-color-background: #141218;
+  --sx-color-on-background: #e6e1e5;
+  --sx-color-outline: #938f99;
+  --sx-color-outline-variant: #444746;
+  --sx-color-shadow: #000;
+  --sx-color-surface-tint: #d0bcff;
+  --sx-internal-color-text: #fff;
+  --sx-border: 1px solid var(--sx-color-outline-variant);
+}
