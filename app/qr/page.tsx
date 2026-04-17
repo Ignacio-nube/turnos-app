@@ -1,6 +1,8 @@
 import { headers } from 'next/headers'
 import { QRPrint } from './QRPrint'
 
+export const dynamic = 'force-dynamic'
+
 export default async function QRPage() {
   const headersList = await headers()
   const host = headersList.get('host') ?? 'localhost:3000'
