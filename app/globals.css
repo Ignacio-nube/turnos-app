@@ -130,11 +130,14 @@
 }
 
 /* Schedule-X: texto blanco en eventos en dark mode */
-.dark .sx__event-title,
-.dark .sx__time-grid-event .sx__event-title,
-.dark .sx__month-grid-event .sx__event-title,
-.dark .sx__agenda-view-event .sx__event-title,
-.dark .sx__event { color: #ffffff; }
+.is-dark .sx__event-title,
+.is-dark .sx__event-title *,
+.is-dark .sx__time-grid-event .sx__event-title,
+.is-dark .sx__month-grid-event .sx__event-title,
+.dark .sx__calendar-wrapper .sx__event-title,
+.dark .sx__calendar-wrapper .sx__event-title * {
+  color: #ffffff !important;
+}
 
 /* Schedule-X dark mode — apply .is-dark variables when Tailwind .dark class is active */
 .dark .sx__calendar-wrapper,
