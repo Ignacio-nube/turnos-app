@@ -192,9 +192,9 @@ export function AppCalendar({ appointments }: AppCalendarProps) {
             <ScheduleXCalendar calendarApp={calendar} />
           </div>
 
-          {/* Detail panel — 320 px wide, pinned to right */}
+          {/* Detail panel — 320 px wide, pinned to right, z-index above week header */}
           {selectedAppointment && (
-            <div className="absolute top-11 right-0 bottom-0 w-80 border-l bg-background flex flex-col overflow-y-auto">
+            <div className="absolute top-11 right-0 bottom-0 w-80 border-l bg-background flex flex-col overflow-y-auto z-20">
               <div className="flex items-center justify-between p-4 border-b shrink-0">
                 <p className="font-medium text-sm">Detalle del turno</p>
                 <Button

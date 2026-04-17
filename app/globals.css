@@ -129,6 +129,20 @@
   }
 }
 
+/* Schedule-X: cursor pointer en eventos */
+.sx__time-grid-event,
+.sx__month-grid-event,
+.sx__agenda-view-event,
+[class*="sx__event"] {
+  cursor: pointer !important;
+}
+
+/* Schedule-X: week header debajo del panel de detalles */
+.sx__week-header,
+.sx__time-grid-header {
+  z-index: 10 !important;
+}
+
 /* Schedule-X: texto blanco en eventos en dark mode */
 .is-dark .sx__event-title,
 .is-dark .sx__event-title *,
